@@ -13,12 +13,14 @@ namespace SeunOrderNotification.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+		public IActionResult Index()
+		{
+			string userEmail = HttpContext.Session.GetString("UserEmail") ?? "";
+			var viewModel = new DashboardViewModel { UserEmail = userEmail };
+			return View(viewModel);
+		}
 
-        public IActionResult Privacy()
+		public IActionResult Privacy()
         {
             return View();
         }

@@ -52,6 +52,7 @@ namespace SeunOrderNotification.Controllers
 			// Store token in HttpContext for further use
 			HttpContext.Session.SetString("JwtToken", token);
 			HttpContext.Session.SetString("UserId", user.Id);
+			HttpContext.Session.SetString("UserEmail", user.Email);
 
 			// Redirect to dashboard
 			return RedirectToAction("Index", "Dashboard");
