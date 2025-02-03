@@ -1,8 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Seun's Photographers Session Booking";
+    List<User> users = ViewBag.Users;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Photographers Session Booking Portal</p>
 </div>
+
+<h2>Select a Photographer</h2>
+<ul>
+    @foreach (var user in users)
+    {
+        <li>
+            <a asp-action="CreateOrder" asp-controller="Home" asp-route-userId="@user.Id">@user.Name</a>
+        </li>
+    }
+</ul>

@@ -11,7 +11,7 @@ namespace SeunOrderNotification.Services
 			_cache = cache;
 		}
 
-		public async Task<List<User>> GetUsers(string username, string password)
+		public async Task<List<User>> GetUsers()
 		{
 			return await _cache.GetOrCreateAsync(
 				$"allusers",

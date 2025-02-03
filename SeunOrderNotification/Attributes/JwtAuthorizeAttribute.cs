@@ -35,7 +35,7 @@ namespace SeunOrderNotification.Attributes
 
 			if (string.IsNullOrEmpty(token))
 			{
-				context.Result = new RedirectToActionResult("Login", "Auth", null);
+				context.Result = new RedirectToActionResult("Index", "Auth", null);
 				return;
 			}
 
@@ -47,7 +47,7 @@ namespace SeunOrderNotification.Attributes
 			catch (Exception)
 			{
 				// If token validation fails, redirect to login
-				context.Result = new RedirectToActionResult("Login", "Auth", null);
+				context.Result = new RedirectToActionResult("Index", "Auth", null);
 			}
 		}
 

@@ -2,12 +2,18 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SeunOrderNotification.Attributes;
+using SeunOrderNotification.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // In Program.cs
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddSession(options =>
 {
 	options.IdleTimeout = TimeSpan.FromHours(2);
@@ -18,7 +24,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddAuthentication(options =>
 {
 	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+	//options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddCookie(options =>
 {
@@ -42,11 +48,7 @@ builder.Services.AddAuthentication(options =>
 });
 builder.Services.AddSignalR();
 builder.Services.AddMemoryCache();
-builder.Services.AddControllersWithViews(options =>
-{
-	// Register the JwtAuthorizeFilter
-	options.Filters.Add<JwtAuthorizeFilter>();
-});
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -54,6 +56,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
+	app.UseExceptionHandler("/Dashboard/Error");
 	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }

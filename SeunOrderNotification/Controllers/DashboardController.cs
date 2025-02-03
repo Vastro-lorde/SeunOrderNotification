@@ -1,10 +1,12 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using SeunOrderNotification.Attributes;
 using SeunOrderNotification.Models;
 using SeunOrderNotification.Services;
 
 namespace SeunOrderNotification.Controllers
 {
+	[JwtAuthorize]
 	public class DashboardController : Controller
 	{
 		private readonly ILogger<DashboardController> _logger;
@@ -32,7 +34,7 @@ namespace SeunOrderNotification.Controllers
 			return View(viewModel);
 		}
 
-		public IActionResult Privacy()
+		public IActionResult Notifications()
 		{
 			return View();
 		}

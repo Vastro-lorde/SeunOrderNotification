@@ -1,1 +1,27 @@
-﻿
+﻿@model LoginViewModel
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-card-header">
+            <h2>Login</h2>
+        </div>
+        <div class="login-card-body">
+            <form asp-action="Login" asp-controller="Auth" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-gold">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

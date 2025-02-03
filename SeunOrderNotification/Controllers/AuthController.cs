@@ -30,11 +30,11 @@ namespace SeunOrderNotification.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Login([FromBody] LoginViewModel request)
+		public async Task<IActionResult> Login(LoginViewModel request)
 		{
 			if (!ModelState.IsValid)
 			{
-				return View(request);
+				return RedirectToAction("Index", "Auth", request);
 			}
 			var user = await _authService.LoginAsync(request.Email, request.Password);
 
@@ -53,6 +53,14 @@ namespace SeunOrderNotification.Controllers
 			HttpContext.Session.SetString("JwtToken", token);
 			HttpContext.Session.SetString("UserId", user.Id);
 			HttpContext.Session.SetString("UserEmail", user.Email);
+
+			// Sign in the user
+			var claims = new[] {
+				new Claim(ClaimTypes.Name, user.Email),
+				new Claim(ClaimTypes.NameIdentifier, user.Id)
+			};
+			var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
 			// Redirect to dashboard
 			return RedirectToAction("Index", "Dashboard");
