@@ -16,7 +16,10 @@ namespace SeunOrderNotification.Controllers
 
         public IActionResult Index()
         {
-            return View();
+			string userEmail = HttpContext.Session.GetString("UserEmail") ?? "";
+			string userId = HttpContext.Session.GetString("UserId") ?? "";
+			var viewModel = new DashboardViewModel { UserEmail = userEmail };
+			return View(viewModel);
         }
 
         public IActionResult Privacy()

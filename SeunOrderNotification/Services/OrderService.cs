@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace SeunOrderNotification.Services
 {
-	public class OrderService
+	public class OrderService : IOrderService
 	{
 		private readonly INotificationService _notificationService;
 		private readonly IMemoryCache _cache;

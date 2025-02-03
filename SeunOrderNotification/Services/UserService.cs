@@ -3,10 +3,10 @@ using SeunOrderNotification.Models;
 
 namespace SeunOrderNotification.Services
 {
-	public class UserService
+	public class UserService : IUserService
 	{
 		private readonly IMemoryCache _cache;
-		public UserService(IMemoryCache cache) 
+		public UserService(IMemoryCache cache)
 		{
 			_cache = cache;
 		}
