@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SeunOrderNotification.Attributes;
 using SeunOrderNotification.Models;
+using SeunOrderNotification.Services;
 
 namespace SeunOrderNotification.Controllers
 {
@@ -10,23 +11,29 @@ namespace SeunOrderNotification.Controllers
 	public class OrdersController : Controller
 	{
 		private readonly ILogger<OrdersController> _logger;
+		private readonly IOrderService _orderService;
+		private readonly INotificationService _notificationService;
 
-		public OrdersController(ILogger<OrdersController> logger)
+		public OrdersController(ILogger<OrdersController> logger, IOrderService orderService, INotificationService notificationService)
 		{
 			_logger = logger;
+			_orderService = orderService;
+			_notificationService = notificationService;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
 			string userEmail = HttpContext.Session.GetString("UserEmail") ?? "";
 			string userId = HttpContext.Session.GetString("UserId") ?? "";
-			var viewModel = new DashboardViewModel { UserEmail = userEmail };
+			var orders = await _orderService.GetOrdersByUserId(userId);
+			var notifications = await _notificationService.GetUnreadNotificationsAsync(userId);
+			var viewModel = new DashboardViewModel
+			{
+				UserEmail = userEmail,
+				Orders = orders,
+				Notifications = notifications
+			};
 			return View(viewModel);
-		}
-
-		public IActionResult Privacy()
-		{
-			return View();
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

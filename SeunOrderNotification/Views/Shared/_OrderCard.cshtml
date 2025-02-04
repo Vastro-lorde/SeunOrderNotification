@@ -1,11 +1,11 @@
 ﻿@model Order
 
-<div class="order-card">
-    <div class="order-header">
+<div class="order-card card mb-4">
+    <div class="card-header">
         <h5>@Model.CustomerName</h5>
         <span class="order-date">@Model.SessionDateTime.ToString("MMM dd, yyyy")</span>
     </div>
-    <div class="order-details">
+    <div class="card-body">
         <p><i class="fas fa-clock"></i> @Model.SessionDateTime.ToString("HH:mm")</p>
         <p><i class="fas fa-hourglass-half"></i> @Model.SessionLengthMinutes minutes</p>
         <p><i class="fas fa-envelope"></i> @Model.CustomerEmail</p>

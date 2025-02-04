@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SeunOrderNotification.Attributes;
 using SeunOrderNotification.Models;
@@ -34,9 +35,27 @@ namespace SeunOrderNotification.Controllers
 			return View(viewModel);
 		}
 
-		public IActionResult Notifications()
+		public async Task<IActionResult> Notifications()
 		{
-			return View();
+			string userEmail = HttpContext.Session.GetString("UserEmail") ?? "";
+			string userId = HttpContext.Session.GetString("UserId") ?? "";
+			var orders = await _orderService.GetOrdersByUserId(userId);
+			var notifications = await _notificationService.GetUnreadNotificationsAsync(userId);
+			var viewModel = new DashboardViewModel
+			{
+				UserEmail = userEmail,
+				Orders = orders,
+				Notifications = notifications
+			};
+			return View(viewModel);
+		}
+		[HttpGet]
+		public async Task<IActionResult> GetNotifications()
+		{
+			string userId = HttpContext.Session.GetString("UserId") ?? "";
+			var notifications = await _notificationService.GetUnreadNotificationsAsync(userId);
+			
+			return Ok(notifications);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

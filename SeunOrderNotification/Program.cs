@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.IdentityModel.Tokens;
 using SeunOrderNotification.Attributes;
 using SeunOrderNotification.Services;
+using SeunOrderNotification.Services.Hub;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,6 +71,14 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+	_ = endpoints.MapHub<NotificationHub>("/notificationhub", options =>
+	{
+		options.Transports = HttpTransportType.WebSockets;
+	});
+});
 
 app.MapControllerRoute(
 	name: "default",

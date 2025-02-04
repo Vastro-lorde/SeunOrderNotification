@@ -2,8 +2,36 @@
 
 <div class="notification-bell" id="notificationBell">
     <i class="fas fa-bell"></i>
-    <span class="notification-count" id="notificationCount">@Model.Count</span>
-    <div class="notification-dropdown" id="notificationDropdown">
-        <partial name="_NotificationsList" model="@Model" />
-    </div>
+    <span class="notification-count" id="notificationCount">@Model.Count(n => !n.IsRead)</span>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.js"></script>
+<script>
+    document.getElementById('notificationBell').onclick = function() {
+        window.location.href = '/Dashboard/Notifications';
+    };
+
+    // Load notification count
+    fetch('/Dashboard/GetNotifications')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            debugger
+            document.getElementById('notificationCount').textContent = data.length;
+        });
+
+    // Update notification count in real-time
+    let connection = new signalR.HubConnectionBuilder()
+        .withUrl("/notificationhub")
+        .build();
+
+    connection.start().catch(err => console.error(err));
+
+    connection.on("ReceiveNotification", function (message) {
+        fetch('/Dashboard/GetNotifications')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('notificationCount').textContent = data.length;
+            });
+    });
+</script>

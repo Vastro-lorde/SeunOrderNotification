@@ -1,1 +1,20 @@
-﻿
+﻿<!-- Notifications.cshtml -->
+@model DashboardViewModel
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2>Notifications</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            @await Html.PartialAsync("_NotificationList", Model.Notifications)
+        </div>
+    </div>
+</div>
