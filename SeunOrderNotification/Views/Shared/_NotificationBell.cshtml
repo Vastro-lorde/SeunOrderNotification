@@ -14,8 +14,6 @@
     fetch('/Dashboard/GetNotifications')
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-            debugger
             document.getElementById('notificationCount').textContent = data.length;
         });
 
@@ -30,7 +28,6 @@
         fetch('/Dashboard/GetNotifications')
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 document.getElementById('notificationCount').textContent = data.length;
             });
     });
