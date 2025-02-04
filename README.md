@@ -54,6 +54,20 @@ Open a web browser and navigate to [https://localhost:7233](http://localhost:528
   dotnet restore --force
   ```
   This forces a re-installation of packages.
+  
+# Test Users for the App
+
+Below is a table of test users, including their emails and passwords for testing the application.
+
+| Name               | Email                      | Password      |
+|--------------------|--------------------------|--------------|
+| Alex Lensworth    | alex.lens@example.com     | password123  |
+| Sophia Snapwell   | sophia.snaps@example.com  | password123  |
+| Liam Focus        | liam.focus@example.com    | password123  |
+| Olivia Frames     | olivia.frames@example.com | password123  |
+| Ethan Capture     | ethan.capture@example.com | password123  |
+| Mia Shutterfield  | mia.shutter@example.com   | password123  |
+| Noah Lightman     | noah.lights@example.com   | password123  |
 
 - If you encounter issues with building the project, try running:  
   ```bash
