@@ -24,35 +24,5 @@
     connection.on("ReceiveNotification", function (message) {
         loadOrders();
     });
-
-    function loadOrders() {
-        fetch('/Dashboard/Orders/GetUserOrders')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                const orderCardsContainer = document.querySelector('.dashboard-order-list');
-                orderCardsContainer.innerHTML = '';
-
-                data.forEach(order => {
-                    const orderCardHtml = `
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="order-card card mb-4">
-                                <div class="card-header">
-                                    <h5>${order.customerName}</h5>
-                                    <span class="order-date">${new Date(order.sessionDateTime).toLocaleString()}</span>
-                                </div>
-                                <div class="card-body">
-                                    <p><i class="fas fa-clock"></i> ${new Date(order.sessionDateTime).toLocaleTimeString()}</p>
-                                    <p><i class="fas fa-hourglass-half"></i> ${order.sessionLengthMinutes} minutes</p>
-                                    <p><i class="fas fa-envelope"></i> ${order.customerEmail}</p>
-                                    <p><i class="fas fa-phone"></i> ${order.customerPhone}</p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    orderCardsContainer.insertAdjacentHTML('beforeend', orderCardHtml);
-                });
-            });
-    }
     loadOrders();
 </script>
