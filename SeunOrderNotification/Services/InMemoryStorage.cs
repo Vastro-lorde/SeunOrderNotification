@@ -18,43 +18,57 @@ namespace SeunOrderNotification.Services
 			Users.AddRange(
 				[
 					new User
-					{
-						Id = "photographer-1",
-						Email = "photographer1@example.com",
-						Name = "Photographer One",
-						Password = "password123" // In real app, this would be hashed
-					},
-					new User
-					{
-						Id = "photographer-2",
-						Email = "photographer2@example.com",
-						Name = "Photographer Two",
-						Password = "password123"
-					},
-					new User
-					{
-						Id = "photographer-3",
-						Email = "photographer3@example.com",
-						Name = "Photographer Three",
-						Password = "password123"
-					},
-					new User
-					{
-						Id = "photographer-4",
-						Email = "photographer4@example.com",
-						Name = "Photographer Four",
-						Password = "password123"
-					},
-					new User
-					{
-						Id = "photographer-5",
-						Email = "photographer5@example.com",
-						Name = "Photographer Five",
-						Password = "password123"
-					}
+			{
+				Id = "photographer-1",
+				Email = "alex.lens@example.com",
+				Name = "Alex Lensworth",
+				Password = "password123"
+			},
+			new User
+			{
+				Id = "photographer-2",
+				Email = "sophia.snaps@example.com",
+				Name = "Sophia Snapwell",
+				Password = "password123"
+			},
+			new User
+			{
+				Id = "photographer-3",
+				Email = "liam.focus@example.com",
+				Name = "Liam Focus",
+				Password = "password123"
+			},
+			new User
+			{
+				Id = "photographer-4",
+				Email = "olivia.frames@example.com",
+				Name = "Olivia Frames",
+				Password = "password123"
+			},
+			new User
+			{
+				Id = "photographer-5",
+				Email = "ethan.capture@example.com",
+				Name = "Ethan Capture",
+				Password = "password123"
+			},
+			new User
+			{
+				Id = "photographer-6",
+				Email = "mia.shutter@example.com",
+				Name = "Mia Shutterfield",
+				Password = "password123"
+			},
+			new User
+			{
+				Id = "photographer-7",
+				Email = "noah.lights@example.com",
+				Name = "Noah Lightman",
+				Password = "password123"
+			}
 				]);
-
 		}
+
 
 		public static void AddNotification(Notification notification)
 		{

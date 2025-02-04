@@ -3,17 +3,26 @@
     List<User> users = ViewBag.Users;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Photographers Session Booking Portal</p>
-</div>
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 fw-bold text-primary">Welcome</h1>
+        <p class="lead">Photographers Session Booking Portal</p>
+    </div>
 
-<h2>Select a Photographer</h2>
-<ul>
-    @foreach (var user in users)
-    {
-        <li>
-            <a asp-action="CreateOrder" asp-controller="Home" asp-route-userId="@user.Id">@user.Name</a>
-        </li>
-    }
-</ul>
+    <div class="card shadow-lg border-0 mt-4">
+        <div class="card-body">
+            <h2 class="h4 text-center mb-4">Select a Photographer</h2>
+            <ul class="list-group list-group-flush">
+                @foreach (var user in users)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold">@user.Name</span>
+                        <a class="btn btn-primary btn-sm" asp-action="CreateOrder" asp-controller="Home" asp-route-userId="@user.Id">
+                            Book Session
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
