@@ -41,7 +41,7 @@ namespace SeunOrderNotification.Controllers
 			if (user == null)
 			{
 				ModelState.AddModelError(string.Empty, "Invalid login attempt");
-				return View(request);
+				return RedirectToAction("Index", "Auth"); ;
 			}
 			/*if (user == null) {
 			}*/
