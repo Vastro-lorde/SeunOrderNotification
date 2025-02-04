@@ -18,23 +18,13 @@
                         </div>
                     </div>
                 }
+                <a class="nav-link" asp-controller="Orders" asp-action="Index">More...</a>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <h2>Unread Notifications</h2>
             <div class="list-group">
-                @foreach (var notification in Model.Notifications)
-                {
-                    <a href="#" class="list-group-item list-group-item-action @(notification.IsRead ? "" : "unread")">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">New Booking Request</h5>
-                            <small>@((DateTime.UtcNow - notification.CreatedAt).TotalHours < 24 ? notification.CreatedAt.ToString("HH:mm") : notification.CreatedAt.ToString("MMM dd"))</small>
-                        </div>
-                        <p class="mb-1">From: @notification.Order.CustomerName</p>
-                        <p class="mb-1">Date: @notification.Order.SessionDateTime.ToString("MMM dd, yyyy HH:mm")</p>
-                        <p class="mb-1">Duration: @notification.Order.SessionLengthMinutes minutes</p>
-                    </a>
-                }
+                @await Html.PartialAsync("_NotificationList", Model.Notifications)
             </div>
         </div>
     </div>

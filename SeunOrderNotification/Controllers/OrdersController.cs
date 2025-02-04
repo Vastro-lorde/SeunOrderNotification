@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SeunOrderNotification.Attributes;
 using SeunOrderNotification.Models;
@@ -36,10 +37,13 @@ namespace SeunOrderNotification.Controllers
 			return View(viewModel);
 		}
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
+		[HttpGet("GetUserOrders")]
+		public async Task<IActionResult> GetUserOrders()
 		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			string userEmail = HttpContext.Session.GetString("UserEmail") ?? "";
+			string userId = HttpContext.Session.GetString("UserId") ?? "";
+			var orders = await _orderService.GetOrdersByUserId(userId);
+			return Ok(orders);
 		}
 	}
 }

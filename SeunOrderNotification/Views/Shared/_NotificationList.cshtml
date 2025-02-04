@@ -19,3 +19,46 @@
         </div>
     }
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.js"></script>
+<script>
+    // Update notification list in real-time
+    // let connection = new signalR.HubConnectionBuilder()
+    //     .withUrl("/notificationhub")
+    //     .build();
+
+    // connection.start().catch(err => console.error(err));
+
+    connection.on("ReceiveNotification", function (message) {
+        loadNotifications();
+    });
+
+    function loadNotifications() {
+        fetch('/Dashboard/GetNotifications')
+            .then(response => response.json())
+            .then(data => {
+                const notificationList = document.querySelector('.notification-list');
+                notificationList.innerHTML = '';
+
+                data.forEach(notification => {
+                    const notificationItem = document.createElement('div');
+                    notificationItem.className = `notification-item ${notification.isRead ? '' : 'unread'}`;
+                    notificationItem.dataset.notificationId = notification.id;
+                    notificationItem.innerHTML = `
+                        <div class="notification-content">
+                            <h6>New Booking Request</h6>
+                            <p>From: ${notification.order.customerName}</p>
+                            <p>Date: ${new Date(notification.order.sessionDateTime).toLocaleString()}</p>
+                            <p>Duration: ${notification.order.sessionLengthMinutes} minutes</p>
+                        </div>
+                        <div class="notification-time">
+                            ${new Date(notification.createdAt).toLocaleString()}
+                        </div>
+                    `;
+                    notificationList.appendChild(notificationItem);
+                });
+            });
+    }
+
+    // Initial load
+    loadNotifications();
+</script>

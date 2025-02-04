@@ -106,12 +106,13 @@ namespace SeunOrderNotification.Services
 			});
 		}
 
-		public static List<Order> GetOrdersByUserId(string userId)
+		public static Task<List<Order>> GetOrdersByUserId(string userId)
 		{
-			return [.. Notifications
-				.Where(n => n.UserId == userId) // Find notifications for this photographer
-				.Select(n => n.Order) // Get the associated Order
-				.OrderByDescending(x => x.CreatedAt)];
+			return Task.FromResult(Notifications
+				.Where(n => n.UserId == userId)
+				.Select(n => n.Order)
+				.OrderByDescending(x => x.CreatedAt)
+				.ToList());
 		}
 
 

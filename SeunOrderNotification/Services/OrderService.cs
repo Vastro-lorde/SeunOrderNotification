@@ -18,18 +18,21 @@ namespace SeunOrderNotification.Services
 		{
 			InMemoryStorage.CreateOrder(order);
 			await _notificationService.CreateNotificationAsync(order, userId);
+			var updateOrders = await InMemoryStorage.GetOrdersByUserId(userId);
+			_cache.Set($"{userId}orders", updateOrders);
 
 		}
 
 		public async Task<List<Order>> GetOrdersByUserId(string userId)
 		{
-			return await _cache.GetOrCreateAsync(
-				$"{userId}",
-				async entry =>
-				{
-					entry.SlidingExpiration = TimeSpan.FromMinutes(10);
-					return InMemoryStorage.GetOrdersByUserId(userId);
-				});
+			var data = _cache.Get<List<Order>>($"{userId}orders");
+			if (data == null) 
+			{
+				var newData = await InMemoryStorage.GetOrdersByUserId(userId);
+				_cache.Set($"{userId}orders", newData);
+				return newData;
+			}
+			return data;
 		}
 	}
 }
